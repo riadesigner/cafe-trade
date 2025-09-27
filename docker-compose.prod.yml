@@ -1,0 +1,49 @@
+services:
+
+  mongo:
+    image: mongo
+    container_name: cafe-trade.db
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - cafe-trade-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    container_name: cafe-trade.server
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - mongo
+    networks:
+      - cafe-trade-network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile.prod
+    container_name: cafe-trade.nginx
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - server
+    networks:
+      - cafe-trade-network
+
+networks:
+  cafe-trade-network:
+    driver: bridge

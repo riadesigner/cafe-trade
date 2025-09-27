@@ -1,0 +1,49 @@
+
+.loader{
+    width: 100%;
+    height: 100%;
+    display: flex;    
+    justify-content: center;
+    align-items: center;        
+}
+.loader span{
+    display: block;
+    width: 60%;
+    height:60%;    
+    border-radius: 10px;
+    background: url(/loader.svg) no-repeat center / cover;
+    animation: loader-ani 2s linear infinite ;        
+    opacity: .5;
+}
+@keyframes loader-ani {
+    100%{
+        transform: rotateZ(359deg);
+    }
+}
+
+.logoBox {    
+    display: flex;
+    height: 100%;
+    flex-direction: column;    
+    justify-content: space-between;
+    align-items:flex-start;
+}
+
+
+/* ----------------------------- 
+    
+   STARTED MOBILE MODE FROM HERE 
+
+   ----------------------------- */
+
+@media (max-width: 1023px) {
+ 
+
+    .logoBox {                    
+        flex-direction: row;    
+        justify-content: space-between;
+        align-items:center;
+    }    
+
+
+}

@@ -1,0 +1,57 @@
+
+
+.schools, .info{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;    
+}
+.schools>div {position: relative;}
+
+.info2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;    
+}
+
+.userPhotoBox {    
+    display: flex;
+    height: 100%;
+    flex-direction: column;    
+    justify-content: space-between;
+    align-items:flex-start;
+}
+
+.addSchoolBox{
+    display: grid;
+    justify-items:center;
+    align-items: center;    
+    width: 100%;
+    height: 100%;    
+}
+
+.btnDelete{
+    position: absolute;
+    top:1rem;right:1rem;
+}
+                            
+
+/* ----------------------------- 
+    
+   STARTED MOBILE MODE FROM HERE 
+
+   ----------------------------- */
+
+@media (max-width: 1023px) {
+ 
+    .schools, .info, .info2{    
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .userPhotoBox {                    
+        flex-direction: row;    
+        justify-content: space-between;
+        align-items:center;
+    }    
+    .addSchoolBox {height: auto !important;}
+
+}
