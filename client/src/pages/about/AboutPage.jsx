@@ -1,28 +1,11 @@
 export default function AboutPage() {
   return (
     <>
-      <section className="container is-max-desktop desktop-only">
-        <div className="section">
-          <nav className="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-              <li>
-                <a href="/client/public">Главная</a>
-              </li>
-              <li className="is-active">
-                <a href="#" aria-current="page">
-                  Авторизация
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
-
-      <section className="container">
-        <div className="section">
+    
+      <div className="section container">        
           <div className="article">
             <article>
-              <h1>О проекте</h1>
+              <h1>О бирже</h1>
               <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cumque
                 omnis non ad atque rerum. Rerum suscipit assumenda iste at quam
@@ -38,9 +21,8 @@ export default function AboutPage() {
                 delectus?facere dolore veniam at!
               </p>
             </article>
-          </div>
-        </div>
-      </section>
+          </div>        
+      </div>
     </>
   );
 }

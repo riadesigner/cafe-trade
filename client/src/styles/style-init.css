@@ -58,7 +58,7 @@ section{display: block;}
 
 .nobr {white-space: nowrap;}
 
-article{min-height: 60vh ;}
+article{min-height: 60vh;}
 article h1{font-size: 3rem;font-weight: 100;}
 article p, article li, article ol{line-height: 1.8;}
 
@@ -70,8 +70,6 @@ article p, article li, article ol{line-height: 1.8;}
 .box {padding:3rem 3rem;}
 
 .block:first-child {margin-top:0;}
-
-
 
 .box{
     box-shadow: var(--shadow-params);
@@ -449,8 +447,7 @@ body.mobile-menu-opened .navbar-menu{transform: translateX(0);opacity: 1;}
         border-bottom-left-radius: 0;        
     }
 
-    .section{margin:1.5rem var(--space-small) !important;}    
-    article{min-height: auto ;}
+    .section{margin:1.5rem var(--space-small) !important;}        
     article h1{font-size: 2rem;}
     .title {margin-bottom:1rem;}
 

@@ -20,12 +20,7 @@ export default function LoginPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        // Используем настроенную копию axios (а не нативный fetch) как интерцептор
-        // Интерцептор сохранит jwt токен и обработает ошибки
         const response = await api.get('/auth/check-auth');
-
-        // console.log('response', response);
-
         if (response.data.isAuthenticated) {
           // console.log(' готов перейти в личный кабинет');
         }
@@ -36,60 +31,43 @@ export default function LoginPage() {
         );
       }
     };
-
-    checkAuth();
+    // checkAuth();
   }, [navigate]);
 
   return (
     <>
-      <section className="container is-max-desktop desktop-only">
-        <div className="section">
-          <nav className="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-              <li>
-                <a href="/client/public">Главная</a>
-              </li>
-              <li className="is-active">
-                <a href="#" aria-current="page">
-                  Авторизация
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
-      <section className="container is-max-desktop">
-        <div className="section site-content">
+
+      <div className="section container is-max-desktop mb-6">
+        
           <article>
             <div className="box">
-              {/* <div className="tabs is-centered is-large ">                
-                        <ul>
-                            <li className="is-active"><a href="#" id="btn-sign-in">Вход</a></li>
-                            <li><a id="btn-sign-up" href="login.html">Регистрация</a></li>
-                        </ul>
-                        </div> */}
-              <h2 className="title has-text-centered mt-6 mt-3-mobile mb-0">
+         
+              <h2 className="title has-text-centered mt-6 mb-6 is-size-5">
                 Выберите способ входа:
               </h2>
-              <div className="pages">
-                <div className="page is-centered">
-                  <div className="loggin-block">
-                    <button
-                      className="button is-large is-regular-mobile is-link"
-                      onClick={hdlYandexLogin}
-                    >
-                      Войти через Яндекс
-                    </button>
-                    <br />
-                    <button
-                      className="button is-large is-regular-mobile is-link"
-                      onClick={hdlMailruLogin}
-                    >
-                      Войти через Mail.ru
-                    </button>
-                  </div>
-                </div>
+
+         
+              
+                <div className="has-text-centered mb-6">
+                  <button
+                    className="button is-large is-regular-mobile is-link mb-2"
+                    onClick={hdlYandexLogin}
+                  >
+                    Войти через Яндекс
+                  </button>
+                  
+                  <br />
+
+                  <button
+                    className="button is-large is-regular-mobile is-link"
+                    onClick={hdlMailruLogin}
+                  >
+                    Войти через Mail.ru
+                  </button>
+                
               </div>
+            
+
               <div className="block">
                 <p className="has-text-centered is-size-7-mobile">
                   <i className="fa-solid fa-check"></i> &nbsp; Я согласен с{' '}
@@ -99,9 +77,8 @@ export default function LoginPage() {
                 </p>
               </div>
             </div>
-          </article>
-        </div>
-      </section>
+          </article>        
+      </div>
     </>
   );
 }

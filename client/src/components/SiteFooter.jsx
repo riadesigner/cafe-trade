@@ -6,46 +6,40 @@ export default function SiteFooter(){
     // const location = useLocation();
     return (
         <>
-        <section className="container is-max-desktop mt-6 yo-footer">
-            <div className="section ">
-                <div className="level">
+        
+        <div className="section container is-max-desktop mt-6">
+            
+                <div className="level mt-6">
                     <div className="level-item is-left">
-                        <Link to="/"><img className="yo-footer-logo" 
-                            src={imgFooterLogo} 
-                            alt="" 
-                            style={{
-                            height: '40px'
-                        }} /></Link>
+                        <Link to="/">
+                            <div style={{
+                                padding:'10px',
+                                display:'inline-block',                                                                
+                                background:'#eaeaea',
+                                margin:'0 auto',
+                            }}>LOGO</div>
+                        </Link>
                     </div>
                     <hr className="mobile-only" />
                     <div className="level-item is-right yo-footer-menu">                
                         
                         <NavLink to="/about"
-                        className={({ isActive }) => isActive ? "level-item nav-link is-active" : "level-item nav-link" }
-                        >О нас</NavLink>
+                        className={({ isActive }) => isActive ? "level-item nav-link is-active mb-4-mobile mr-4 mr-0-mobile" : "level-item nav-link mb-4-mobile mr-4 mr-0-mobile" }
+                        >О бирже</NavLink>
 
-                        <NavLink to="/faq" 
-                        className={({ isActive }) => isActive ? "level-item nav-link is-active" : "level-item nav-link" }
-                        >FAQ</NavLink>
-
-                        <NavLink to="/startup" 
-                        className={({ isActive }) => isActive ? "level-item nav-link is-active" : "level-item nav-link" }
-                        >Страница стартапа</NavLink>                
+                        <NavLink to="/login" 
+                        className={({ isActive }) => isActive ? "level-item nav-link is-active mb-4-mobile " : "level-item nav-link mb-4-mobile " }
+                        >Войти</NavLink>
 
                     </div>                
                 </div>
-            </div>         
-        </section>
+            
+        </div>
 
+        <div className="site-footer mt-5">
+            <br/>
+        </div>       
 
-        <section className="container">
-            <div className="section">
-            <h2 className="subtitle is-size-6 mb-3">Временное меню</h2>
-            <Link to='/chats/123'>Чат с дизайнером</Link><br />
-            </div>
-        </section>
-
-        <div className="site-footer mt-5"></div>       
         </>
     )
 } 
