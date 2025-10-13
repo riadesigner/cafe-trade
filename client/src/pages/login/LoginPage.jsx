@@ -5,12 +5,10 @@ import api from '../../utils/api.jsx';
 export default function LoginPage() {
   const hdlYandexLogin = () => {
     window.location.href = `/auth/yandex`;
-    // window.location.href = 'http://localhost:3000/auth/yandex';
   };
 
   const hdlMailruLogin = () => {
     window.location.href = `/auth/mailru`;
-    // window.location.href = 'http://localhost:3000/auth/mailru';
   };
 
   const navigate = useNavigate();
@@ -31,7 +29,7 @@ export default function LoginPage() {
         );
       }
     };
-    // checkAuth();
+    checkAuth();
   }, [navigate]);
 
   return (
@@ -45,8 +43,6 @@ export default function LoginPage() {
               <h2 className="title has-text-centered mt-6 mb-6 is-size-5">
                 Выберите способ входа:
               </h2>
-
-         
               
                 <div className="has-text-centered mb-6">
                   <button

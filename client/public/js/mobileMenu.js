@@ -1,13 +1,16 @@
 const MobileMenu = {
-    init:function(){
+    init:function(){        
         this.$navbarBurgers = $('.navbar-burger');
         this.$navbar = $('#navbar-mobile');
         this.$body = $('body');
         this.behavior();
     },
     behavior:function(){
-        this.$navbarBurgers.each((index, el)=>{            
-            $(el).on('click',()=>{                                    
+        console.log('behavior')
+        console.log('total this.$navbarBurgers', this.$navbarBurgers.length)
+        this.$navbarBurgers.each((index, el)=>{              
+            $(el).on('click',()=>{    
+                console.log('clicked')                                
                 const isOpened = this.$body.hasClass('mobile-menu-opened');
                 if(isOpened){
                     this.hide_menu();

@@ -1,7 +1,5 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
-import imgFooterLogo from '../i/yolk-logo.svg'
-
 export default function SiteFooter(){
     // const location = useLocation();
     return (

@@ -11,11 +11,14 @@ export default function AuthCallbackPage() {
   // const checkUser
 
   useEffect(() => {
+
     const token = searchParams.get('token');
+
     if (token) {
       login(token);
       window.history.replaceState({}, '', '/'); // Очищаем URL
-      // console.log('token = ', token);
+      console.log('token = ', token);
+      
 
       const checkAuth = async () => {
         const response = await api.get('/auth/check-auth');
@@ -24,26 +27,26 @@ export default function AuthCallbackPage() {
           const user = response.data.user;
 
           switch (user.role) {
-            case 'designer':
-              navigate('/cp/designer');
-              break;
-            case 'company':
-              navigate('/cp/company');
+            case 'client':
+              navigate('/cp/client');
               break;
             case 'manager':
               navigate('/cp/manager');
               break;
-            case 'administrator':
-              navigate('/cp/yolk-admin');
-              break;
+            case 'administrator':              
+              navigate('/cp/administrator');
+              break;               
             default:
-              navigate('/role-selection');
+              console.log('роль не определена')
+              navigate('/');
           }
         } else {
+          console.log('пользователь не аутентифицирован')
           navigate('/');
         }
       };
-      checkAuth();
+      // checkAuth();
+
     } else {
       navigate('/login'); // Если токена нет
     }

@@ -24,15 +24,12 @@ module.exports = (passport) => {
         yandexId: id,
         email: emails[0].value,
         name: username,
-        avatar: photos?.[0]?.value        
-      };
-      
-      const userInfo = {
+        avatar: photos?.[0]?.value,
         firstName: name.familyName,
         secondName: name.givenName,
-        gender: gender,     
-      }
-
+        gender: gender,                     
+      };
+      
       // ----------------------
       //  searching user in db
       // ----------------------      
@@ -43,8 +40,8 @@ module.exports = (passport) => {
       // ----------------------------------------------      
       if(!usr){
         try{
-          userData.role = 'unknown';
-          usr = await usersService.create(userData, userInfo);
+          userData.role = 'client';
+          usr = await usersService.create(userData);
         }catch(err){
           return done('не удалось создать пользователя');          
         }

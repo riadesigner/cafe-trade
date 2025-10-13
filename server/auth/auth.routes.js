@@ -1,6 +1,4 @@
-	const express = require('express')
-const crypto = require('crypto');
-const UsersService = require('../users/users.service')
+const express = require('express')
 const passport = require('passport');
 const rnd = require("randomstring");
 const router = express.Router();

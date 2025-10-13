@@ -1,45 +1,35 @@
+const AppError = require('../middleware/AppError')
 
-const UsersModel = require('./users.model');
-const userInfoService = require('../userinfo/userinfo.service')
-const portfoliosService = require('../portfolios/portfolios.service')
+const UsersModel = require('./users.model');  
   
-  exports.findById = function (id) {
-    return new Promise(async (res,rej)=>{
+  exports.findById = async function (id) {
       try{
         const user = await UsersModel
           .findById(id)
-          .populate('userInfo')
-          .populate('userCompany');
-        res(user); 
+          // .populate('userInfo')
+        return user;
       }catch(e){
         console.log(`cant find user by id ${id}, err: ${e.message || e}`)
-        res(null);
+        throw new AppError('User not found', 404);
       }
-    })
   }
 
-  exports.findDesigners = async function () {    
+  exports.findClients = async function () {    
       try{
-        const designers = await UsersModel
+        const clients = await UsersModel
           .find({
-            role:'designer',
+            role:'client',
           })
-          .populate('userInfo');
-        return designers;
+          // .populate('userInfo');
+        return clients;
       }catch(err){
         return [];
       }
   }
 
-  exports.update = function (id, userUpdateDto) {
-    return new Promise(async (res,rej)=>{
-
-      console.log('userUpdateDto', userUpdateDto);
-
+  exports.update = async function (id, userUpdateDto) {
       const {updatedAt, createdAt, ...data } = userUpdateDto;
-
       try{        
-
         const userUpdated = await UsersModel.findByIdAndUpdate(
             id,
             data,
@@ -51,41 +41,36 @@ const portfoliosService = require('../portfolios/portfolios.service')
         console.log(`cant find user by id ${id}, err: ${e.message || e}`)
         res(null);
       }
-    })
   }  
 
-  exports.create = function (userData, infoData = {}) {  
-      return new Promise(async (res,rej)=>{ 
-        
-        try{
-
-          // 1. Создаём userInfo
-          const newUserInfo = await userInfoService.create(infoData);     
-          // 2. Создаём user с привязкой к userInfo._id
-          const newUser = await UsersModel.create({
-            ...userData,
-            userInfo: newUserInfo._id
-          });               
-          res(newUser);
-
-        }catch(e){
-          console.log(`cant create new user, err: ${e}`)
-          res(null);
-        }
-      })    
+  exports.create = async function (userData) {  
+    try{
+      const newUser = await UsersModel.create(userData);               
+      return newUser
+    }catch(e){          
+      throw new AppError(`cant create new user, err: ${e}`, 500);
+    }
   }  
-  
-  exports.findByEmail = function (email) {
-    return new Promise(async (res,rej)=>{
-      try{
-        const user = await UsersModel
-          .findOne({email:email})
-          .populate('userInfo')
-          .populate('userCompany')          
-        res(user);
-      }catch(e){
-        console.log(`cant find user by id ${email}, err:${e.message || e}`)
-        res(null);
-      }
-    })
+
+  exports.findByEmail = async function (email) {
+    try{
+      const user = await UsersModel
+        .findOne({email:email})
+        // .populate('userInfo')        
+      return user;
+    }catch(e){
+      console.log(`cant find user by id ${email}, err:${e.message || e}`)
+      throw new AppError('User not found', 404);
+    }
   }
+
+exports.findAdmins = async function () {
+  try {
+    return await UsersModel.find({
+      role: 'administrator',
+    })
+    //.populate('userInfo');
+  } catch (err) {
+    return [];
+  }
+};  
