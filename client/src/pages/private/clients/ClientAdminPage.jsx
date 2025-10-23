@@ -1,39 +1,32 @@
-import { Link } from 'react-router-dom';
-
-// import useFetchDesignerAdmin from '../../../hooks/useFetchDesignerAdmin.js';
-
-import Breadcrumb from '../../../components/Breadcrumb.jsx';
+import useFetchClientAdmin from '../../../hooks/useFetchClientAdmin.js';
+import ErrorMessage from '../../../components/ErrorMessage.jsx';
 
 export default function ClientAdminPage() {
-  const links = [
-    { link: '/', title: 'Главная' },
-    { link: '#', title: 'Панель управления', isActive: true },
-  ];
-
-  // const { user, notifications, nowLoading } = useFetchDesignerAdmin();
+  const { user, nowLoading, errorMessage } = useFetchClientAdmin();
 
   return (
     <>
-      <div className="container is-max-desktop desktop-only">        
-          <Breadcrumb links={links} />        
-      </div>
-
-      <div className="container">        
-          <div className="banner is-primary">
-            <div className="banner-body">
-              <h1 className="sub-title is-size-5-mobile mb-0">
-                {/* Добро, пожаловать <nobr>{user && user.name}!</nobr> */}
-                Добро, пожаловать !
-              </h1>
+      {nowLoading ? (
+        <>...</>
+      ) : (
+        <>
+          <div className="container">
+            <div className="banner is-primary">
+              <div className="banner-body">
+                <h1 className="sub-title is-size-5-mobile mb-0">
+                  Добро, пожаловать <nobr>{user && user.name}!</nobr>
+                </h1>
+              </div>
             </div>
-          </div>        
-      </div>
+          </div>
 
-      <div className="container">
-      <article>
-        123
-      </article>        
-      </div>
+          <div className="container">
+            <article>
+              {errorMessage && <ErrorMessage message={errorMessage} />}
+            </article>
+          </div>
+        </>
+      )}
     </>
   );
 }

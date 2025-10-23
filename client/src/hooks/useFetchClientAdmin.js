@@ -3,26 +3,15 @@ import { useEffect, useState } from 'react';
 
 import api from '../utils/api.jsx';
 
-export default function useFetchCompanyAdmin() {
+export default function useFetchClientAdmin() {
   const [user, setUser] = useState(null);
-  const [orders] = useState([]);
-  const [notifications, setNotifications] = useState([]);
   const [nowLoading, setNowLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      const response = await api.get(`/notifications/me/limit/4`);
-      if (response.data.success) {
-        const arrNotifications = response.data.notifications;
-        arrNotifications &&
-          arrNotifications.length > 0 &&
-          setNotifications(arrNotifications);
-      }
-    };
-
-    const fetchUserFull = async () => {
+    const fetchUser = async () => {
       try {
         const response = await api.get('/users/me');
 
@@ -30,23 +19,22 @@ export default function useFetchCompanyAdmin() {
           const usr = response.data.user;
           if (usr) {
             setUser(usr);
-            await fetchNotifications();
             setNowLoading(false);
           }
         }
       } catch (err) {
+        setErrorMessage('Ошибка загрузки профиля');
         console.error('Ошибка загрузки профиля', err);
         navigate('/');
       }
     };
 
-    void fetchUserFull();
+    void fetchUser();
   }, [navigate]);
 
   return {
     user,
-    orders,
-    notifications,
     nowLoading,
+    errorMessage,
   };
 }

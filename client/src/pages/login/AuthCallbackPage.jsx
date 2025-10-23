@@ -11,42 +11,36 @@ export default function AuthCallbackPage() {
   // const checkUser
 
   useEffect(() => {
-
     const token = searchParams.get('token');
 
     if (token) {
       login(token);
       window.history.replaceState({}, '', '/'); // Очищаем URL
-      console.log('token = ', token);
-      
 
       const checkAuth = async () => {
         const response = await api.get('/auth/check-auth');
-        // console.log('response', response);
+
         if (response.data.isAuthenticated) {
           const user = response.data.user;
 
           switch (user.role) {
             case 'client':
-              navigate('/cp/client');
+              navigate('/cp/cafe-client');
               break;
             case 'manager':
-              navigate('/cp/manager');
+              navigate('/cp/cafe-manager');
               break;
-            case 'administrator':              
-              navigate('/cp/administrator');
-              break;               
+            case 'administrator':
+              navigate('/cp/cafe-administrator');
+              break;
             default:
-              console.log('роль не определена')
               navigate('/');
           }
         } else {
-          console.log('пользователь не аутентифицирован')
           navigate('/');
         }
       };
-      // checkAuth();
-
+      checkAuth();
     } else {
       navigate('/login'); // Если токена нет
     }

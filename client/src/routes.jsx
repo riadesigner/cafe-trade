@@ -1,4 +1,3 @@
-
 // --------------------
 //    PUBLIC PAGES
 // --------------------
@@ -17,6 +16,7 @@ import {
 import {
   ClientAdminPage,
   ManagerAdminPage,
+  AdministratorPage,
 } from './pages/private/index.js';
 
 import Entry from './Entry.jsx';
@@ -31,12 +31,12 @@ const routes = [
       { path: 'about', element: <AboutPage /> }, // /about
       { path: 'login', element: <LoginPage /> }, // /вход
 
-      { path: 'auth-callback', Component: AuthCallbackPage },      
+      { path: 'auth-callback', Component: AuthCallbackPage },
 
       // private pages
-      { path: 'cp/cafe-client', element: <ClientAdminPage /> }, // /личный кабинет клиента      
+      { path: 'cp/cafe-client', element: <ClientAdminPage /> }, // /личный кабинет клиента
       { path: 'cp/cafe-manager', element: <ManagerAdminPage /> }, // /личный кабинет менеджера
-
+      { path: 'cp/cafe-administrator', element: <AdministratorPage /> }, // /личный кабинет администратора
     ],
   },
 ];

@@ -1,10 +1,10 @@
-export default function ManagerAdminPage() {
+export default function AdministratorPage() {
   return (
     <>
       <article>
         <div className="container">
           <div className="container">
-            <div className="section">Личный кабинет Менеджера</div>
+            <div className="section">Личный кабинет Администратора</div>
           </div>
         </div>
       </article>

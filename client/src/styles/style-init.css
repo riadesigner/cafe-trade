@@ -76,8 +76,8 @@ article p, article li, article ol{line-height: 1.8;}
     border-radius: 20px;
 }
 
-.banner { border-radius: 30px;position: relative;}
-.banner-body{width:40vw;padding: 4rem 4rem 4.5rem 4rem;}
+.banner { border-radius: 30px;position: relative;margin:1rem 0;}
+.banner-body{width:40vw;padding: 2rem 4rem 2.5rem 4rem;}
 .banner-image{
     position: absolute;right:0;width: 40%;height:100%;top:0;
     border-top-right-radius: 30px;
@@ -407,6 +407,7 @@ hr {width: 50%;border:none;border-bottom:1px solid #b5b5b5;margin-top:2rem;margi
 body.mobile-menu-opened{overflow: hidden;}
 body.mobile-menu-opened .navbar-menu{transform: translateX(0);opacity: 1;}
 
+a.is-active{ text-decoration: underline;}
 
 /* COMMON RESPOSIVE */
 
@@ -447,7 +448,8 @@ body.mobile-menu-opened .navbar-menu{transform: translateX(0);opacity: 1;}
         border-bottom-left-radius: 0;        
     }
 
-    .section{margin:1.5rem var(--space-small) !important;}        
+    .section{margin:1.5rem var(--space-small) !important;}
+    .banner{margin:1.5rem var(--space-small) !important;}        
     article h1{font-size: 2rem;}
     .title {margin-bottom:1rem;}
 
