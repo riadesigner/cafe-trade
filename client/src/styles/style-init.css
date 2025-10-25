@@ -1,16 +1,18 @@
 :root {
-  --primary-color: #84cc15;
-  --link-color: #5046e6;
-  
-  --info-color: #66d1ff;
-  --success-color: #84cc15;
-  --warning-color: #ffb710;
+  --primary-color: #FFA538;
+  --link-color: #E47A00;
+  --info-color: #8C7575;
+
+  --success-color: #ffb710;
+  --warning-color: #E47A00;
+
   --danger-color: #ff6684;  
-  --dark-color: #333333;  
-  --superlight-color: #ededed;    
+  --dark-color: #1F0C0C;  
   
-  --light-color: #b4b4b4;    
-  --white-color: #ffffff;  
+  --superlight-color: #ebebeb;    
+  --light-color: #FFFFFF;    
+  --white-color: #FFFFFF;
+
   --space-small: 10px;
   --block-spacing: 1.5rem;
   --shadow-params:0 0 10px rgba(0,0,0,.2);
@@ -24,10 +26,12 @@ body, p, a, input, button, h1, h2, h3, h4, h5, h6 {
     font-weight: 200;     
 }
 
+button{font-weight: 400;}
+
 p, h1, h2, h3, h4, h5, h6{margin:0 0 1rem 0;padding:0;}
 
-a{text-decoration: none; color: var(--link-color);}
-a:hover{opacity: .8;}
+a{text-decoration: none; color: var(--superlight-color);}
+a:hover{color:var(--primary-color);opacity: .7;}
 
 *{box-sizing: border-box;}
 
@@ -276,7 +280,7 @@ hr {width: 50%;border:none;border-bottom:1px solid #b5b5b5;margin-top:2rem;margi
 .button, .button.is-regular{font-size: 1rem; border-radius:6px;}
 .button.is-medium{font-size: 1.25rem;padding:1rem 1.5rem;border-radius:8px !important;}
 .button.is-large{font-size: 1.4rem;padding:1.25rem 1.75rem; border-radius:10px !important;}
-.button:hover{opacity: .9;}
+.button:hover{opacity: .8;}
 .button.disabled{opacity: .4;cursor:default;}
 .button.no-borders{border: 0 none !important;}
 .button.no-paddings{padding: 0 !important;}
