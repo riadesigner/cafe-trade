@@ -1,25 +1,35 @@
 const { Schema, model } = require('mongoose');
 
-const userSchema = new Schema({
-    email: { type:String, required:true},
-    googleId: { type:String },
-    yandexId: { type:String },
-    mailruId: { type:String },
-    name: { type:String },
-    avatar: { type:String },    
-    role: { type:String },    
-    createdAt: { type:Date },
-    updatedAt: { type:Date },
-}, {
-  timestamps: true,
-  toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id.toString();
-      delete ret._id;
-      delete ret.__v;
-      return ret;
-    }
-  }
-});
+const userSchema = new Schema(
+  {
+    email: { type: String, required: true },
+    googleId: { type: String },
+    yandexId: { type: String },
+    mailruId: { type: String },
+    name: { type: String },
+    phone: {
+      type: String,
+      default: '',
+    },
+    accountCoins: {
+      type: Number,
+      default: 0,
+    },
+    avatar: { type: String },
+    role: { type: String },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id.toString();
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+      },
+    },
+  },
+);
 module.exports = model('Users', userSchema);
-

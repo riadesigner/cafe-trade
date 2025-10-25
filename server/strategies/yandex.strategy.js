@@ -4,58 +4,67 @@ const usersService = require('../users/users.service');
 const JWTUtils = require('../utils/jwtUtils');
 
 module.exports = (passport) => {
-  passport.use(new YandexStrategy({
-    clientID: process.env.YANDEX_CLIENT_ID,
-    clientSecret: process.env.YANDEX_CLIENT_SECRET,
-    callbackURL: process.env.YANDEX_CALLBACK_URL,
-  }, async (accessToken, refreshToken, profile, done) => {
-    
-    try {
-      // --------------------
-      //  GENERATING PAYLOAD
-      // --------------------
-      const { id, username, emails, photos, name, gender } = profile;      
+  passport.use(
+    new YandexStrategy(
+      {
+        clientID: process.env.YANDEX_CLIENT_ID,
+        clientSecret: process.env.YANDEX_CLIENT_SECRET,
+        callbackURL: process.env.YANDEX_CALLBACK_URL,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        console.log('================== profile ================== ', profile);
 
-      if (!emails?.[0]?.value) {
-        return done("Email is required");
-      }
+        try {
+          // --------------------
+          //  GENERATING PAYLOAD
+          // --------------------
+          const { id, username, emails, photos, name, gender } = profile;
 
-      const userData = {
-        yandexId: id,
-        email: emails[0].value,
-        name: username,
-        avatar: photos?.[0]?.value,
-        firstName: name.familyName,
-        secondName: name.givenName,
-        gender: gender,                     
-      };
-      
-      // ----------------------
-      //  searching user in db
-      // ----------------------      
-      let usr = await usersService.findByEmail(userData.email);
-      
-      // ----------------------------------------------
-      //  если нет такого пользователя, то создаем его
-      // ----------------------------------------------      
-      if(!usr){
-        try{
-          userData.role = 'client';
-          usr = await usersService.create(userData);
-        }catch(err){
-          return done('не удалось создать пользователя');          
+          if (!emails?.[0]?.value) {
+            return done('Email is required');
+          }
+
+          const userPhone = profile?._json?.default_phone?.number || '';
+
+          const userData = {
+            yandexId: id,
+            email: emails[0].value,
+            name: username,
+            avatar: photos?.[0]?.value,
+            firstName: name.familyName,
+            secondName: name.givenName,
+            gender: gender,
+            phone: userPhone,
+          };
+
+          // ----------------------
+          //  searching user in db
+          // ----------------------
+          let usr = await usersService.findByEmail(userData.email);
+
+          // ----------------------------------------------
+          //  если нет такого пользователя, то создаем его
+          // ----------------------------------------------
+          if (!usr) {
+            try {
+              userData.role = 'client';
+              usr = await usersService.create(userData);
+            } catch (err) {
+              console.log('err', err);
+              return done('не удалось создать пользователя');
+            }
+          }
+
+          const payload = { id: usr._id, email: usr.email, role: usr.role };
+          const token = JWTUtils.generateToken(payload, { expiresIn: '2h' });
+
+          console.log('Yandex auth success for:', payload);
+          return done(null, { ...usr, token, accessToken });
+        } catch (err) {
+          console.error('Yandex auth error:', err);
+          return done(err.message);
         }
-      }
-
-      const payload = { id: usr._id, email: usr.email, role:usr.role };      
-      const token = JWTUtils.generateToken(payload, { expiresIn: '2h' });
-
-      console.log('Yandex auth success for:', payload );
-      return done(null, { ...usr, token, accessToken });
-
-    } catch (err) {
-      console.error('Yandex auth error:', err);
-      return done(err.message);
-    }
-  }));
+      },
+    ),
+  );
 };

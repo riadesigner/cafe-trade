@@ -26,16 +26,7 @@ export default function SiteFooter() {
         <div className="level mt-6">
           <div className="level-item is-left">
             <Link to="/">
-              <div
-                style={{
-                  padding: '10px',
-                  display: 'inline-block',
-                  background: '#eaeaea',
-                  margin: '0 auto',
-                }}
-              >
-                LOGO
-              </div>
+              <div className="ws-cafe-trade-logo">WS-CAFE-TRADE</div>
             </Link>
           </div>
           <hr className="mobile-only" />

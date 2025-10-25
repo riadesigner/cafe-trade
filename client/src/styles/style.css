@@ -3,6 +3,13 @@ body{
     color:var(--light-color);
 }
 
-p{
-    color:var(--primary-color);
+p, .bright{ color:var(--link-color); }
+ 
+.ws-cafe-trade-logo { 
+    border:1px solid var(--light-color);
+    border-radius: 6px;
+    color: var(--light-color);
+    font-size:.8rem;
+    padding:.7rem .7rem;
 }
+
