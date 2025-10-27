@@ -39,6 +39,7 @@ app.use(requestLogger);
 app.use('/auth', require('./auth/auth.routes')); // auth через яндекс и mailru
 app.use('/api', require('./auth/auth-api.routes')); // jwt
 app.use('/api', require('./users/users-api.routes')); // пользователи
+app.use('/api', require('./deals/deals-api.routes')); // сделки
 
 app.get('/', (req, res) => {
   const user = req.user;

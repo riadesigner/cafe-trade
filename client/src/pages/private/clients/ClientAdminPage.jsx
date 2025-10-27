@@ -1,17 +1,30 @@
 import useFetchClientAdmin from '../../../hooks/useFetchClientAdmin.js';
 import ErrorMessage from '../../../components/ErrorMessage.jsx';
+import Deal from '../../../components/Deal.jsx';
+import { formatDate } from '../../../utils/dateUtilits.jsx';
 
 export default function ClientAdminPage() {
-  const { user, nowLoading, errorMessage } = useFetchClientAdmin();
+  const {
+    user,
+    deals,
+    coinsData,
+    nowLoading,
+    errorMessage,
+    hdlBuy,
+    userInputCoins,
+    setUserInputCoins,
+  } = useFetchClientAdmin();
 
-  const fromateDate = (date) => {
-    return date;
-  };
+  const currentExchangeRate = 95;
+  const currentExchangeRateStr = currentExchangeRate / 100;
+  const cost1000 = (1000 * currentExchangeRate) / 100;
+  const savingsTodayStr = 0;
+  const MAX_TO_BUY_AST_ONCE = 1000;
 
   return (
     <>
       {nowLoading ? (
-        <div className="container">...</div>
+        <div className="container">...Загрузка</div>
       ) : (
         <>
           <div className="container">
@@ -39,36 +52,64 @@ export default function ClientAdminPage() {
                       Почта: <span className="bright">{user.email || ''}</span>
                     </div>
                     <div className="is-size-7 mb-3">
-                      Всего покупок: <span className="bright">0</span>{' '}
+                      Всего куплено:{' '}
+                      <span className="bright">
+                        {coinsData ? coinsData.totalPurchases : 0}
+                      </span>
                     </div>
                     <div className="is-size-7 mb-3">
-                      Дата рег.: <span>{fromateDate(user.createdAt)}</span>{' '}
+                      Всего потрачено:{' '}
+                      <span className="bright">
+                        {coinsData ? coinsData.totalSpendings : 0}
+                      </span>
+                    </div>
+                    <div className="is-size-7 mb-3">
+                      Дата рег.: <span>{formatDate(user.createdAt)}</span>
                     </div>
                   </div>
                   <div className="column is-7">
                     <div className="is-size-4 mb-5">
-                      Баланс: <span className="bright">1000 Ф</span>
+                      Баланс:{' '}
+                      <span className="bright">
+                        {coinsData ? coinsData.totalCoins : 0} WSM
+                      </span>
                     </div>
                     <div className="is-size-6 mb-4">
                       Экономия на сегодня:{' '}
-                      <span className="bright">350 Руб.</span>
+                      <span className="bright">
+                        <nobr>{savingsTodayStr} руб.</nobr>
+                      </span>
                     </div>
                     <div className="is-size-6 mb-4">
-                      Текущий курс (0.95):{' '}
-                      <span className="bright">1000 Ф = 650 Руб.</span>
+                      Текущий курс ({currentExchangeRateStr}):{' '}
+                      <span className="bright">
+                        1000 WSM = <nobr>{cost1000} руб.</nobr>
+                      </span>
                     </div>
 
                     <br />
-                    <h2>Фьючерсы</h2>
+                    <h2>WS-Мотеты</h2>
 
-                    <div className="level is-1" style={{ maxWidth: '250px' }}>
+                    <div className="level is-1" style={{ maxWidth: '350px' }}>
                       <input
                         type="number"
                         className="input level-item is-medium has-text-right"
                         placeholder="1000"
+                        onChange={(e) => {
+                          let n = e.target.value;
+                          let max = MAX_TO_BUY_AST_ONCE;
+                          n = parseInt(n, 10) > max ? max : n;
+                          setUserInputCoins(n);
+                        }}
+                        value={userInputCoins}
                       />
-                      <button className="button level-item is-medium is-primary">
-                        Купить
+                      <button
+                        className="button level-item is-medium is-primary"
+                        onClick={(e) => {
+                          hdlBuy(e);
+                        }}
+                      >
+                        Купить&nbsp;WSM
                       </button>
                     </div>
 
@@ -82,19 +123,15 @@ export default function ClientAdminPage() {
               <div className="section mr-0 ml-0">
                 <hr />
                 <h2 className="title">История</h2>
-                {/* <p>Нет записей</p> */}
-                <div className="mb-3">
-                  11.10.2025 - купил{' '}
-                  <span className="bright">
-                    <strong>1000 Ф</strong> (курс: 0.90) Экономия 100 руб.
-                  </span>{' '}
-                </div>
-                <div className="mb-3">
-                  12.10.2025 - потратил{' '}
-                  <span className="is-danger">
-                    <strong>200 Ф</strong> Менеджер: Евгений / pogreb@inbox.ru
-                  </span>
-                </div>
+                {deals && deals.length > 0 ? (
+                  <>
+                    {deals.map((d) => {
+                      return <Deal key={d.id} data={d} />;
+                    })}
+                  </>
+                ) : (
+                  <p>Нет записей</p>
+                )}
               </div>
             </div>
 
