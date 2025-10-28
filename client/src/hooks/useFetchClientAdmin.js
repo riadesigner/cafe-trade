@@ -14,6 +14,8 @@ export default function useFetchClientAdmin() {
     totalPurchases: 0,
     totalSpendings: 0,
   });
+  const [currentExchangeRate, setCurrentExchangeRate] = useState(0);
+  setCurrentExchangeRate(0);
 
   const navigate = useNavigate();
 
@@ -29,21 +31,17 @@ export default function useFetchClientAdmin() {
     }
   };
 
-  const fetchUser = async () => {
-    try {
-      const response = await api.get('/users/me');
-      if (response.data.success) {
-        setUser(response.data.user);
-        setCoinsData(response.data.coinsData);
-        await fetchDeals();
-        setNowLoading(false);
-      }
-    } catch (err) {
-      setErrorMessage('Ошибка загрузки профиля');
-      console.error('Ошибка загрузки профиля', err);
-      navigate('/');
-    }
-  };
+  // const fetchCurrentRate = async () => {
+  //   try {
+  //     const response = await api.get('/rates/current');
+  //     if (response.data.success) {
+  //       setCurrentExchangeRate(response.data.currentRate);
+  //     }
+  //   } catch (err) {
+  //     setErrorMessage('Ошибка загрузки данных о покупках');
+  //     console.error('Ошибка загрузки данных о покупках', err);
+  //   }
+  // };
 
   const hdlBuy = async (e) => {
     e.preventDefault();
@@ -63,6 +61,22 @@ export default function useFetchClientAdmin() {
   };
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get('/users/me');
+        if (response.data.success) {
+          setUser(response.data.user);
+          setCoinsData(response.data.coinsData);
+          await fetchDeals();
+          setNowLoading(false);
+        }
+      } catch (err) {
+        setErrorMessage('Ошибка загрузки профиля');
+        console.error('Ошибка загрузки профиля', err);
+        navigate('/');
+      }
+    };
+
     fetchUser();
   }, [navigate]);
 
@@ -75,5 +89,6 @@ export default function useFetchClientAdmin() {
     hdlBuy,
     userInputCoins,
     setUserInputCoins,
+    currentExchangeRate,
   };
 }

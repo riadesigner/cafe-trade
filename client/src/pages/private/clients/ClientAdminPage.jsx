@@ -13,18 +13,19 @@ export default function ClientAdminPage() {
     hdlBuy,
     userInputCoins,
     setUserInputCoins,
+    currentExchangeRate,
   } = useFetchClientAdmin();
 
-  const currentExchangeRate = 95;
   const currentExchangeRateStr = currentExchangeRate / 100;
   const cost1000 = (1000 * currentExchangeRate) / 100;
   const savingsTodayStr = 0;
-  const MAX_TO_BUY_AST_ONCE = 1000;
+  const MAX_TO_BUY_WST_ONCE = 1000;
+  const MIN_TO_BUY_WST_ONCE = 100;
 
   return (
     <>
       {nowLoading ? (
-        <div className="container">...Загрузка</div>
+        <div className="container">... Загрузка</div>
       ) : (
         <>
           <div className="container">
@@ -97,8 +98,10 @@ export default function ClientAdminPage() {
                         placeholder="1000"
                         onChange={(e) => {
                           let n = e.target.value;
-                          let max = MAX_TO_BUY_AST_ONCE;
+                          let max = MAX_TO_BUY_WST_ONCE;
+                          let min = MIN_TO_BUY_WST_ONCE;
                           n = parseInt(n, 10) > max ? max : n;
+                          n = parseInt(n, 10) < min ? min : n;
                           setUserInputCoins(n);
                         }}
                         value={userInputCoins}

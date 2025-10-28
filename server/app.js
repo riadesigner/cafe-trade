@@ -7,6 +7,7 @@ const configureCors = require('./config/cors');
 const configureAdmins = require('./config/admin');
 const requestLogger = require('./middleware/requestLogger');
 const configureDataBase = require('./config/db');
+const initCronJobs = require('./utils/cronJobs');
 const { sendError } = require('./middleware/utils');
 const {
   authErrorHandler,
@@ -27,6 +28,7 @@ configureSessions(app);
 configurePassport(app);
 configureCors(app);
 configureAdmins();
+initCronJobs();
 
 app.use('/public', express.static(PUBLIC_PATH));
 app.use(express.json());
