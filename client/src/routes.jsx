@@ -15,6 +15,7 @@ import {
 // --------------------
 import {
   ClientAdminPage,
+  ClientPurchasingPage,
   ManagerAdminPage,
   AdministratorPage,
 } from './pages/private/index.js';
@@ -35,6 +36,10 @@ const routes = [
 
       // private pages
       { path: 'cp/cafe-client', element: <ClientAdminPage /> }, // /личный кабинет клиента
+      {
+        path: 'cp/cafe-client/purchasing/:amount',
+        element: <ClientPurchasingPage />,
+      }, // /страница покупки wsm
       { path: 'cp/cafe-manager', element: <ManagerAdminPage /> }, // /личный кабинет менеджера
       { path: 'cp/cafe-administrator', element: <AdministratorPage /> }, // /личный кабинет администратора
     ],

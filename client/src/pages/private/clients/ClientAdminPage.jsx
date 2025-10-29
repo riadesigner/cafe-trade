@@ -16,6 +16,7 @@ export default function ClientAdminPage() {
     setUserInputCoins,
     currentExchangeRate,
   } = useFetchClientAdmin();
+
   const calc_saving = (coins, rate) => {
     return coins > 0 ? Math.round(coins - (coins * rate) / 100) : 0;
   };
@@ -23,12 +24,13 @@ export default function ClientAdminPage() {
   const cost1000 = (1000 * currentExchangeRate) / 100;
   const savingsTodayStr = calc_saving(1000, currentExchangeRate);
   const MAX_TO_BUY_WST_ONCE = 1000;
-  const MIN_TO_BUY_WST_ONCE = 100;
 
   return (
     <>
       {nowLoading ? (
-        <div className="container">... Загрузка</div>
+        <div className="container">
+          <p>... loading</p>
+        </div>
       ) : (
         <>
           <div className="container">
@@ -106,9 +108,7 @@ export default function ClientAdminPage() {
                       onChange={(e) => {
                         let n = e.target.value;
                         let max = MAX_TO_BUY_WST_ONCE;
-                        let min = MIN_TO_BUY_WST_ONCE;
                         n = parseInt(n, 10) > max ? max : n;
-                        n = parseInt(n, 10) < min ? min : n;
                         setUserInputCoins(n);
                       }}
                       value={userInputCoins}
@@ -136,7 +136,9 @@ export default function ClientAdminPage() {
             <hr />
             <h2 className="title">История</h2>
             {nowLoadingDeals ? (
-              <>... Загрузка</>
+              <>
+                <p>... loading</p>
+              </>
             ) : deals && deals.length > 0 ? (
               <>
                 {deals.map((d) => {
@@ -148,7 +150,9 @@ export default function ClientAdminPage() {
             )}
 
             <div className="container">
-              {errorMessage && <ErrorMessage message={errorMessage} />}
+              <div className="section ml-0 mr-0">
+                {errorMessage && <ErrorMessage message={errorMessage} />}
+              </div>
             </div>
           </div>
         </div>

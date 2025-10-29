@@ -15,7 +15,7 @@
 
   --space-small: 10px;
   --block-spacing: 1.5rem;
-  --shadow-params:0 0 10px rgba(0,0,0,.2);
+  --shadow-params:0 0 10px rgba(145, 127, 127);
 }
 
 html, body { height: 100%;padding:0;margin: 0;}
@@ -455,6 +455,10 @@ a.is-active{ text-decoration: underline;}
         border-top-left-radius: 20px;
         border-bottom-left-radius: 0;        
     }
+    
+    .breadcrumb ul li {font-size: x-small;}
+    .breadcrumb ul li:not(:last-child):after{ right:-.5rem;}
+    .breadcrumb ul{gap:1rem;}
 
     .section{margin:1.5rem var(--space-small) !important;}
     .banner{margin:1.5rem var(--space-small) !important;}        

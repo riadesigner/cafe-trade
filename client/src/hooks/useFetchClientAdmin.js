@@ -6,7 +6,7 @@ import api from '../utils/api.jsx';
 export default function useFetchClientAdmin() {
   const [user, setUser] = useState(null);
   const [deals, setDeals] = useState([]);
-  const [userInputCoins, setUserInputCoins] = useState(0);
+  const [userInputCoins, setUserInputCoins] = useState(100);
   const [nowLoading, setNowLoading] = useState(true);
   const [nowLoadingDeals, setNowLoadingDeals] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -51,16 +51,18 @@ export default function useFetchClientAdmin() {
     let amount = parseInt(userInputCoins, 10);
     if (amount === 0 || amount < 0) return;
 
-    try {
-      const response = await api.put(`/deals/me/${amount}`);
-      if (response && response.data.success) {
-        setDeals(response.data.deals);
-        setCoinsData(response.data.updatedCoinsData);
-      }
-    } catch (err) {
-      setErrorMessage('Ошибка покупки WSM');
-      console.error('Ошибка покупки WSM', err);
-    }
+    navigate(`/cp/cafe-client/purchasing/${amount}`);
+
+    // try {
+    //   const response = await api.put(`/deals/me/${amount}`);
+    //   if (response && response.data.success) {
+    //     setDeals(response.data.deals);
+    //     setCoinsData(response.data.updatedCoinsData);
+    //   }
+    // } catch (err) {
+    //   setErrorMessage('Ошибка покупки WSM');
+    //   console.error('Ошибка покупки WSM', err);
+    // }
   };
 
   useEffect(() => {
