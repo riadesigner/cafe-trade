@@ -42,6 +42,7 @@ app.use('/auth', require('./auth/auth.routes')); // auth через яндекс
 app.use('/api', require('./auth/auth-api.routes')); // jwt
 app.use('/api', require('./users/users-api.routes')); // пользователи
 app.use('/api', require('./deals/deals-api.routes')); // сделки
+app.use('/api', require('./exchange-rates/exchange-rates.api.routes')); // курс валюты
 
 app.get('/', (req, res) => {
   const user = req.user;

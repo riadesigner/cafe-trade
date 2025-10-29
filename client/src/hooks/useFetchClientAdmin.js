@@ -8,6 +8,7 @@ export default function useFetchClientAdmin() {
   const [deals, setDeals] = useState([]);
   const [userInputCoins, setUserInputCoins] = useState(0);
   const [nowLoading, setNowLoading] = useState(true);
+  const [nowLoadingDeals, setNowLoadingDeals] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [coinsData, setCoinsData] = useState({
     totalCoins: 0,
@@ -15,7 +16,6 @@ export default function useFetchClientAdmin() {
     totalSpendings: 0,
   });
   const [currentExchangeRate, setCurrentExchangeRate] = useState(0);
-  setCurrentExchangeRate(0);
 
   const navigate = useNavigate();
 
@@ -24,24 +24,27 @@ export default function useFetchClientAdmin() {
       const response = await api.get('/deals/me');
       if (response.data.success) {
         setDeals(response.data.deals);
+      } else {
+        setErrorMessage('Ошибка [2] загрузки данных о покупках');
       }
+      setNowLoadingDeals(false);
     } catch (err) {
-      setErrorMessage('Ошибка загрузки данных о покупках');
+      setErrorMessage('Ошибка [1] загрузки данных о покупках');
       console.error('Ошибка загрузки данных о покупках', err);
     }
   };
 
-  // const fetchCurrentRate = async () => {
-  //   try {
-  //     const response = await api.get('/rates/current');
-  //     if (response.data.success) {
-  //       setCurrentExchangeRate(response.data.currentRate);
-  //     }
-  //   } catch (err) {
-  //     setErrorMessage('Ошибка загрузки данных о покупках');
-  //     console.error('Ошибка загрузки данных о покупках', err);
-  //   }
-  // };
+  const fetchCurrentRate = async () => {
+    try {
+      const response = await api.get('/exchange-rates/current');
+      if (response.data.success) {
+        setCurrentExchangeRate(response.data.currentRate.rate);
+      }
+    } catch (err) {
+      setErrorMessage('Ошибка загрузки текущего курса');
+      console.error('Ошибка загрузки текущего курса', err);
+    }
+  };
 
   const hdlBuy = async (e) => {
     e.preventDefault();
@@ -61,14 +64,17 @@ export default function useFetchClientAdmin() {
   };
 
   useEffect(() => {
+    setCurrentExchangeRate(0);
+
     const fetchUser = async () => {
       try {
         const response = await api.get('/users/me');
         if (response.data.success) {
           setUser(response.data.user);
           setCoinsData(response.data.coinsData);
-          await fetchDeals();
+          await fetchCurrentRate();
           setNowLoading(false);
+          await fetchDeals();
         }
       } catch (err) {
         setErrorMessage('Ошибка загрузки профиля');
@@ -85,6 +91,7 @@ export default function useFetchClientAdmin() {
     deals,
     coinsData,
     nowLoading,
+    nowLoadingDeals,
     errorMessage,
     hdlBuy,
     userInputCoins,

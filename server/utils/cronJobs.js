@@ -1,6 +1,6 @@
 // server/cronJobs.js
 const cron = require('node-cron');
-const updateExchangeRate = require('../exchange-rates/exchange-rates.service');
+const updateExchangeRate = require('../exchange-rates/updateExchangeRate');
 
 function initCronJobs() {
   // Каждый день в 9:00 = 0 9 * * *
