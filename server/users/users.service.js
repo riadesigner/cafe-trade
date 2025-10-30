@@ -52,11 +52,10 @@ exports.create = async function (userData) {
 exports.findByEmail = async function (email) {
   try {
     const user = await UsersModel.findOne({ email: email });
-    // .populate('userInfo')
     return user;
-  } catch (e) {
-    console.log(`cant find user by id ${email}, err:${e.message || e}`);
-    throw new AppError('User not found', 404);
+  } catch (err) {
+    console.log(err);
+    return null;
   }
 };
 
@@ -65,9 +64,45 @@ exports.findAdmins = async function () {
     return await UsersModel.find({
       role: 'administrator',
     });
-    //.populate('userInfo');
   } catch (err) {
     console.log('err', err);
     return [];
+  }
+};
+
+exports.findManagers = async function () {
+  try {
+    return await UsersModel.find({
+      role: 'manager',
+    });
+  } catch (err) {
+    console.log('err', err);
+    return [];
+  }
+};
+
+exports.addManager = async function (managerData) {
+  try {
+    const { email, name } = managerData;
+    const user = await this.findByEmail(email);
+
+    if (user && user.role !== 'manager') {
+      throw new AppError('Пользователь с такой почтой уже есть', 400);
+    }
+
+    if (user && user.role === 'manager') {
+      user.isActive = true;
+      await user.save();
+      return user;
+    }
+
+    if (!user) {
+      const userData = { email, name, role: 'manager' };
+      const manager = await UsersModel.create(userData);
+      return manager;
+    }
+  } catch (err) {
+    console.log('err', err);
+    throw new AppError('Не удалось создать пользователя', 500);
   }
 };

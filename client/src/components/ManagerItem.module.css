@@ -1,0 +1,16 @@
+.item{    
+  display: flex;
+  justify-content: space-between; 
+  gap:.5rem;
+  margin:0 0 1rem 0;
+}
+
+.itemEmail{
+  display:flex;
+  width:calc(100%/12*10);
+}
+
+.itemRemove{
+  width:calc(100%/12*2);  
+  display:flex; align-items: flex-start; justify-content: flex-end;
+}

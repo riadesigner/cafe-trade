@@ -39,12 +39,12 @@ a:hover{color:var(--link-color);opacity: .8;}
 .input{
     border:1px solid #cccccc;
     padding:.55rem 1rem;border-radius: 8px;font-size: 1rem;
-    outline-color: #bdc4f5;
+    outline-color: var(--link-color);
     max-width: 100%;
     width: 100%;
     color:var(--dark-color);    
 }
-.input::placeholder{color:#cccccc;}
+.input::placeholder{color:#c4bebe;}
 .label{margin-bottom: .4rem;}
 
 .input.is-medium{font-size: 1.25rem;padding:.75rem 1.5rem;}
@@ -66,7 +66,7 @@ section{display: block;}
 
 .nobr {white-space: nowrap;}
 
-article{min-height: 60vh;}
+article{min-height: 70vh;}
 article h1{font-size: 3rem;font-weight: 100;}
 article p, article li, article ol{line-height: 1.8;}
 
@@ -289,9 +289,10 @@ hr {border:none;border-bottom:1px solid #b5b5b5;margin-top:2rem;margin-bottom:2r
 .button.no-borders{border: 0 none !important;}
 .button.no-paddings{padding: 0 !important;}
 
+.button.is-inverted{color:var(--light-color) !important;background-color:var(--dark-color) !important;border:1px solid var(--light-color);font-weight: 100; }
 .button.is-white{color:var(--dark-color) !important;background-color:var(--white-color) !important; border:1px solid var(--light-color);}
 .button.is-link{color:white !important;background-color: var(--link-color) !important;}
-.button.is-link.is-inverted{color:var(--link-color) !important;background-color:white !important;border:1px solid var(--link-color); }
+.button.is-link.is-inverted{color:var(--link-color) !important;background-color:var(--dark-color) !important;border:1px solid var(--link-color);font-weight: 100; }
 .button.is-primary{color:white !important;background-color: var(--primary-color) !important;}
 .button.is-danger{color:white !important; background-color: var(--danger-color) !important;}
 
@@ -466,6 +467,7 @@ a.is-active{ text-decoration: underline;}
     .title {margin-bottom:1rem;}
 
     .columns{flex-direction: column;justify-content: space-around;gap:1rem !important;}
+    
     .column { width: 100% !important;}
 
     .column.is-right-mobile { display:flex; align-items: flex-start; justify-content: flex-end;}

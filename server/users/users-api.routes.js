@@ -20,15 +20,34 @@ router.get(
 );
 
 router.get(
-  '/users/:id',
+  '/users/managers',
+  passport.authenticate('jwt', { session: false }),
   asyncHandler(async (req, res) => {
-    const { id } = req.params;
-    console.log(`search user ${id}`);
-    const user = await UsersService.findById(id);
-    if (!user) {
-      return sendError(res, 'User not found', 404);
-    }
-    sendSuccess(res, { user: user.toJSON() });
+    const managers = await UsersService.findManagers();
+    sendSuccess(res, { managers: managers.map((m) => m.toJSON()) });
+  }),
+);
+
+// router.get(
+//   '/users/:id',
+//   asyncHandler(async (req, res) => {
+//     const { id } = req.params;
+//     console.log(`search user ${id}`);
+//     const user = await UsersService.findById(id);
+//     if (!user) {
+//       return sendError(res, 'User not found', 404);
+//     }
+//     sendSuccess(res, { user: user.toJSON() });
+//   }),
+// );
+
+router.put(
+  '/users/add-manager',
+  asyncHandler(async (req, res) => {
+    const { name, email } = req.body;
+    await UsersService.addManager({ name, email });
+    const managers = await UsersService.findManagers();
+    sendSuccess(res, { managers: managers.map((m) => m.toJSON()) });
   }),
 );
 

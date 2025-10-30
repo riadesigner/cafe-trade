@@ -17,6 +17,7 @@ const userSchema = new Schema(
     },
     avatar: { type: String },
     role: { type: String },
+    isActive: { type: Boolean, default: true },
     createdAt: { type: Date },
     updatedAt: { type: Date },
   },
