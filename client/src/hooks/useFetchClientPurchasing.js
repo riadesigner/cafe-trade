@@ -28,7 +28,7 @@ export default function useFetchClientAdmin() {
     // let amount = parseInt(userInputCoins, 10);
     // if (amount === 0 || amount < 0) return;
 
-    // navigate('/cp/cafe-client/purchasing');
+    navigate('/cp/cafe-client/purchasing/success');
 
     // try {
     //   const response = await api.put(`/deals/me/${amount}`);

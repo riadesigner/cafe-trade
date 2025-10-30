@@ -16,6 +16,8 @@ import {
 import {
   ClientAdminPage,
   ClientPurchasingPage,
+  ClientPurchasingSuccessPage,
+  ClientPurchasingFailPage,
   ManagerAdminPage,
   AdministratorPage,
 } from './pages/private/index.js';
@@ -40,6 +42,14 @@ const routes = [
         path: 'cp/cafe-client/purchasing/:amount',
         element: <ClientPurchasingPage />,
       }, // /страница покупки wsm
+      {
+        path: 'cp/cafe-client/purchasing/success',
+        element: <ClientPurchasingSuccessPage />,
+      }, // /успешная покупки wsm
+      {
+        path: 'cp/cafe-client/purchasing/fail',
+        element: <ClientPurchasingFailPage />,
+      }, // /ошибка при оплате
       { path: 'cp/cafe-manager', element: <ManagerAdminPage /> }, // /личный кабинет менеджера
       { path: 'cp/cafe-administrator', element: <AdministratorPage /> }, // /личный кабинет администратора
     ],
