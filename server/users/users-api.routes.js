@@ -42,10 +42,20 @@ router.get(
 // );
 
 router.put(
-  '/users/add-manager',
+  '/users/manager',
   asyncHandler(async (req, res) => {
     const { name, email } = req.body;
     await UsersService.addManager({ name, email });
+    const managers = await UsersService.findManagers();
+    sendSuccess(res, { managers: managers.map((m) => m.toJSON()) });
+  }),
+);
+
+router.delete(
+  '/users/manager',
+  asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    await UsersService.removeManagerByEmail(email);
     const managers = await UsersService.findManagers();
     sendSuccess(res, { managers: managers.map((m) => m.toJSON()) });
   }),

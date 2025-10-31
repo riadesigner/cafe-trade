@@ -5,11 +5,35 @@ export default function useFetchAdmin() {
   const [user, setUser] = useState(null);
   const [nowLoading, setNowLoading] = useState(true);
   const [nowSaving, setNowSaving] = useState(false);
+  const [nowDeleting, setNowDeleting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [newManagerName, setNewManagerName] = useState('');
   const [newManagerEmail, setNewManagerEmail] = useState('');
   const [errorMessageNewManager, setErrorMessageNewManager] = useState('');
   const [managers, setManagers] = useState([]);
+
+  const hdlDeleteManager = async (e, email) => {
+    e.preventDefault();
+    setErrorMessageNewManager('');
+    setErrorMessage('');
+    setNowDeleting(true);
+    const data = { email };
+
+    try {
+      const response = await api.delete('/users/manager', { data });
+      if (response.data.success) {
+        setManagers(response.data.managers);
+      } else {
+        setErrorMessage('Менеджер не удаляется');
+      }
+    } catch (err) {
+      setErrorMessage('Менеджер не удаляется');
+      console.error('Менеджер не удаляется', err);
+    }
+    setNewManagerName('');
+    setNewManagerEmail('');
+    setNowDeleting(false);
+  };
 
   const addNewManager = async (e) => {
     e.preventDefault();
@@ -25,7 +49,7 @@ export default function useFetchAdmin() {
     setNowSaving(true);
     const data = { email, name };
     try {
-      const response = await api.put('/users/add-manager', data);
+      const response = await api.put('/users/manager', data);
       if (response.data.success) {
         setManagers(response.data.managers);
       } else {
@@ -80,7 +104,9 @@ export default function useFetchAdmin() {
     managers,
     nowLoading,
     nowSaving,
+    nowDeleting,
     addNewManager,
+    hdlDeleteManager,
     newManagerName,
     setNewManagerName,
     newManagerEmail,

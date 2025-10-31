@@ -85,27 +85,21 @@ exports.calcCoinsByUser = async function (userId) {
   }
 };
 
-// exports.update = async function (id, userUpdateDto) {
-//     const {updatedAt, createdAt, ...data } = userUpdateDto;
-//     try{
-//       const userUpdated = await UsersModel.findByIdAndUpdate(
-//           id,
-//           data,
-//           { new: true }
-//       );
-//       res(userUpdated);
-
-//     }catch(e){
-//       console.log(`cant find user by id ${id}, err: ${e.message || e}`)
-//       res(null);
-//     }
-// }
-
 exports.create = async function (dealDataDto) {
   try {
     const newDeal = await DealsModel.create(dealDataDto);
     return newDeal;
   } catch (e) {
     throw new AppError(`cant create new deal, err: ${e}`, 500);
+  }
+};
+
+exports.findDealsByManager = async function (managerId) {
+  try {
+    const deals = await DealsModel.find({ manager: managerId });
+    return deals;
+  } catch (err) {
+    console.log(`not found deals for the managerId ${managerId}`, err);
+    return [];
   }
 };

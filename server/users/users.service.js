@@ -1,6 +1,7 @@
 const AppError = require('../middleware/AppError');
 
 const UsersModel = require('./users.model');
+const DealsService = require('../deals/deals.service');
 
 exports.findById = async function (id) {
   try {
@@ -104,5 +105,31 @@ exports.addManager = async function (managerData) {
   } catch (err) {
     console.log('err', err);
     throw new AppError('Не удалось создать пользователя', 500);
+  }
+};
+
+exports.removeManagerByEmail = async function (email) {
+  try {
+    const manager = await UsersModel.findOne({ email: email, role: 'manager' });
+    if (!manager) {
+      throw new AppError(`Не удалось найти менеджера с почтой ${email}`, 404);
+    }
+    const deals = await DealsService.findDealsByManager(manager._id);
+    if (deals && deals.length > 0) {
+      manager.isActive = false;
+      await manager.save();
+    } else {
+      const result = await UsersModel.findByIdAndDelete(manager._id);
+      if (!result) {
+        throw new AppError(
+          `Не удется удалить менеджера ${manager._id}, ${email}`,
+          400,
+        );
+      }
+    }
+    return true;
+  } catch (err) {
+    console.log('err', err);
+    throw new AppError(`Не удется удалить менеджера ${email}`, 400);
   }
 };

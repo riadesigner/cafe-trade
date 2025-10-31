@@ -8,7 +8,9 @@ export default function AdministratorPage() {
     managers,
     nowLoading,
     nowSaving,
+    nowDeleting,
     addNewManager,
+    hdlDeleteManager,
     newManagerName,
     setNewManagerName,
     newManagerEmail,
@@ -36,7 +38,14 @@ export default function AdministratorPage() {
                     <p>...loading</p>
                   ) : managers && managers.length > 0 ? (
                     managers.map((m) => {
-                      return <ManagerItem key={m.id} data={m}></ManagerItem>;
+                      return (
+                        <ManagerItem
+                          key={m.id}
+                          data={m}
+                          hdlDeleteManager={hdlDeleteManager}
+                          nowDeleting={nowDeleting}
+                        ></ManagerItem>
+                      );
                     })
                   ) : (
                     <p className="mt-0">
