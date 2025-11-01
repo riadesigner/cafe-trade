@@ -20,6 +20,7 @@ import {
   ClientPurchasingFailPage,
   ManagerAdminPage,
   AdministratorPage,
+  AdministratorClientsPage,
 } from './pages/private/index.js';
 
 import Entry from './Entry.jsx';
@@ -52,6 +53,10 @@ const routes = [
       }, // /ошибка при оплате
       { path: 'cp/cafe-manager', element: <ManagerAdminPage /> }, // /личный кабинет менеджера
       { path: 'cp/cafe-administrator', element: <AdministratorPage /> }, // /личный кабинет администратора
+      {
+        path: 'cp/cafe-administrator/clients',
+        element: <AdministratorClientsPage />,
+      }, // /личный кабинет администратора -> все клиенты
     ],
   },
 ];

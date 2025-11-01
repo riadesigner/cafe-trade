@@ -25,6 +25,30 @@ exports.findClients = async function () {
   }
 };
 
+exports.findManagers = async function () {
+  try {
+    const managers = await UsersModel.find({
+      role: 'manager',
+    });
+    return managers;
+  } catch (err) {
+    console.log('err', err);
+    return [];
+  }
+};
+
+exports.findClientsCount = async function () {
+  try {
+    const clientsCount = await UsersModel.countDocuments({
+      role: 'client',
+    });
+    return clientsCount;
+  } catch (err) {
+    console.log('err', err);
+    return 0;
+  }
+};
+
 // exports.update = async function (id, userUpdateDto) {
 //     const {updatedAt, createdAt, ...data } = userUpdateDto;
 //     try{

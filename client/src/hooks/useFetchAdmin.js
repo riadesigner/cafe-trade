@@ -3,6 +3,7 @@ import api from '../utils/api.jsx';
 
 export default function useFetchAdmin() {
   const [user, setUser] = useState(null);
+  const [clientsCount, setClientsCount] = useState(0);
   const [nowLoading, setNowLoading] = useState(true);
   const [nowSaving, setNowSaving] = useState(false);
   const [nowDeleting, setNowDeleting] = useState(false);
@@ -79,12 +80,27 @@ export default function useFetchAdmin() {
       }
     };
 
+    const fetchClientsCount = async () => {
+      try {
+        const response = await api.get('/users/clients/count');
+        if (response.data.success) {
+          setClientsCount(response.data.clientsCount);
+        } else {
+          setErrorMessage('Количество клиентов не загружено');
+        }
+      } catch (err) {
+        setErrorMessage('Количество клиентов не загружено');
+        console.error('Количество клиентов не загружено', err);
+      }
+    };
+
     const fetchUser = async () => {
       try {
         const response = await api.get('/users/me');
         if (response.data.success) {
           setUser(response.data.user);
           await fetchManagers();
+          await fetchClientsCount();
         } else {
           setErrorMessage('Ошибка [1] загрузки профиля');
         }
@@ -102,6 +118,7 @@ export default function useFetchAdmin() {
   return {
     user,
     managers,
+    clientsCount,
     nowLoading,
     nowSaving,
     nowDeleting,

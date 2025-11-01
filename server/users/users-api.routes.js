@@ -28,6 +28,24 @@ router.get(
   }),
 );
 
+router.get(
+  '/users/clients',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const clients = await UsersService.findClients();
+    sendSuccess(res, { clients: clients.map((m) => m.toJSON()) });
+  }),
+);
+
+router.get(
+  '/users/clients/count',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const clientsCount = await UsersService.findClientsCount();
+    sendSuccess(res, { clientsCount });
+  }),
+);
+
 // router.get(
 //   '/users/:id',
 //   asyncHandler(async (req, res) => {

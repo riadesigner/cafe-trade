@@ -1,11 +1,13 @@
 import useFetchAdmin from '../../../hooks/useFetchAdmin.js';
 import ManagerItem from '../../../components/ManagerItem.jsx';
 import ErrorMessage from '../../../components/ErrorMessage.jsx';
+import { Link } from 'react-router-dom';
 
 export default function AdministratorPage() {
   const {
     user,
     managers,
+    clientsCount,
     nowLoading,
     nowSaving,
     nowDeleting,
@@ -25,7 +27,7 @@ export default function AdministratorPage() {
         <div className="container">
           <div className="section ml-0  mr-0">
             <div className="block">
-              Кабинет Администратора
+              <div>Кабинет Администратора</div>
               <p>
                 <small>{user && user.email}</small>
               </p>
@@ -108,15 +110,19 @@ export default function AdministratorPage() {
                 <h1 className="title is-size-5">Статистика</h1>
                 <div className="block mb-5">
                   <div className="mb-3 is-size-6 is-size-7-mobile">
-                    Всего клиентов: 4
+                    {clientsCount
+                      ? `Всего клиентов: ${clientsCount}`
+                      : '&nbsp;'}
                   </div>
                 </div>
-                <button className="button is-primary">
-                  <span>Все клиенты</span>
-                  <span className="icon">
-                    <i className="fa fa-angle-right" />
-                  </span>
-                </button>
+                <Link to="/cp/cafe-administrator/clients">
+                  <button className="button is-primary">
+                    <span>Все клиенты</span>
+                    <span className="icon">
+                      <i className="fa fa-angle-right" />
+                    </span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
