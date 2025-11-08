@@ -13,6 +13,20 @@ exports.findById = async function (id) {
   }
 };
 
+exports.findClientsByPhone = async function (phone) {
+  try {
+    console.log('================ phone ================ ', phone);
+    const users = await UsersModel.find({
+      phone: { $regex: phone, $options: 'i' },
+      role: 'client',
+    });
+    return users;
+  } catch (e) {
+    console.log(`cant find clients by phone ${phone}, err: ${e.message || e}`);
+    return [];
+  }
+};
+
 exports.findClients = async function () {
   try {
     const clients = await UsersModel.find({

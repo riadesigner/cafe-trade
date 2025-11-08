@@ -94,10 +94,10 @@ exports.create = async function (dealDataDto) {
   }
 };
 
-exports.findDealsByManager = async function (managerId) {
+exports.findByManagerId = async function (managerId) {
   try {
     const deals = await DealsModel.find({ manager: managerId });
-    return deals;
+    return deals.populate('user');
   } catch (err) {
     console.log(`not found deals for the managerId ${managerId}`, err);
     return [];

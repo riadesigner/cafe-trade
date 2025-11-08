@@ -3,6 +3,7 @@ const UsersService = require('./users.service');
 const DealsService = require('../deals/deals.service');
 const passport = require('passport');
 const { asyncHandler, sendSuccess, sendError } = require('../middleware/utils');
+const AppError = require('../middleware/AppError');
 
 const router = express.Router();
 
@@ -29,11 +30,43 @@ router.get(
 );
 
 router.get(
+  '/users/clients/:clientId',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const { clientId } = req.params;
+    const client = await UsersService.findById(clientId);
+    if (!client) {
+      sendError(res, 'Not found', 404);
+    }
+    const coinsData = await DealsService.calcCoinsByUser(client._id);
+    sendSuccess(res, { client: client.toJSON(), coinsData });
+  }),
+);
+
+router.get(
   '/users/clients',
   passport.authenticate('jwt', { session: false }),
   asyncHandler(async (req, res) => {
     const clients = await UsersService.findClients();
     sendSuccess(res, { clients: clients.map((m) => m.toJSON()) });
+  }),
+);
+
+router.get(
+  '/users/clients-by-phone/:clientPhone',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const myRole = req.user.role;
+    if (myRole !== 'administrator' && myRole !== 'manager') {
+      throw new AppError('не хватает прав для данного действия ', 403);
+    }
+    const { clientPhone: phone } = req.params;
+    const clients = await UsersService.findClientsByPhone(phone);
+    if (!clients) {
+      sendError(res, `Клиент с номером тел. ${phone} не найден`, 404);
+      return [];
+    }
+    sendSuccess(res, { clients: clients.map((u) => u.toJSON()) });
   }),
 );
 

@@ -19,6 +19,23 @@ router.get(
   }),
 );
 
+router.get(
+  '/deals/bymanager/:managerId',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const { managerId } = req.params;
+    const user = await UsersService.findById(managerId);
+    if (!user) {
+      return sendError(res, 'User not found', 404);
+    }
+    if (user.role !== 'manager') {
+      return sendError(res, 'User is not manager', 403);
+    }
+    const deals = await DealsService.findByManagerId(managerId);
+    sendSuccess(res, { deals: deals.map((d) => d.toJSON()) });
+  }),
+);
+
 router.put(
   '/deals/me/:amount',
   passport.authenticate('jwt', { session: false }),

@@ -48,6 +48,7 @@ a:hover{color:var(--link-color);opacity: .8;}
 .label{margin-bottom: .4rem;}
 
 .input.is-medium{font-size: 1.25rem;padding:.75rem 1.5rem;}
+.input.is-large{font-size: 1.4rem;padding:1.25rem 1.75rem; border-radius:10px !important;}
 
 label{display: inline-block;}
 section{display: block;}
