@@ -56,7 +56,9 @@ export default function useFetchAdmin() {
       // console.log("не достаточно средств на счету");
       setErrorMessage('не достаточно средств на счету');
     } else {
-      // console.log("OK!!!");
+      // try{
+      // }catch{
+      // }
     }
   };
 

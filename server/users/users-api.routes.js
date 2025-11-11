@@ -30,6 +30,15 @@ router.get(
 );
 
 router.get(
+  '/users/clients/count',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const clientsCount = await UsersService.findClientsCount();
+    sendSuccess(res, { clientsCount });
+  }),
+);
+
+router.get(
   '/users/clients/:clientId',
   passport.authenticate('jwt', { session: false }),
   asyncHandler(async (req, res) => {
@@ -67,15 +76,6 @@ router.get(
       return [];
     }
     sendSuccess(res, { clients: clients.map((u) => u.toJSON()) });
-  }),
-);
-
-router.get(
-  '/users/clients/count',
-  passport.authenticate('jwt', { session: false }),
-  asyncHandler(async (req, res) => {
-    const clientsCount = await UsersService.findClientsCount();
-    sendSuccess(res, { clientsCount });
   }),
 );
 

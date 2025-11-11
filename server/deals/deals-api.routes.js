@@ -59,4 +59,29 @@ router.put(
   }),
 );
 
+router.post(
+  '/deals/sell/:amount',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const { amount } = req.params;
+    console.log('amount', amount);
+    // const user = await UsersService.findByEmail(req.user.email);
+    // if (!user) {
+    //   return sendError(res, 'User not found', 404);
+    // }
+    // const rate = Math.floor(Math.random() * (99 - 70 + 1) + 70);
+    // const dealDataDto = {
+    //   type: 'purchase',
+    //   user: user._id,
+    //   coins: amount,
+    //   exchangeRate: rate,
+    // };
+    // await DealsService.create(dealDataDto);
+    // const deals = await DealsService.findByUserId(user._id);
+    // const updatedCoinsData = await DealsService.calcCoinsByUser(user._id);
+    // sendSuccess(res, { deals: deals.map((d) => d.toJSON()), updatedCoinsData });
+    sendSuccess(res, {});
+  }),
+);
+
 module.exports = router;

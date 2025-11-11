@@ -8,7 +8,7 @@ exports.findById = async function (id) {
     const user = await UsersModel.findById(id);
     return user;
   } catch (e) {
-    console.log(`cant find user by id ${id}, err: ${e.message || e}`);
+    console.log(`[1] cant find user by id ${id}, err: ${e.message || e}`);
     throw new AppError('User not found', 404);
   }
 };
@@ -121,28 +121,23 @@ exports.findManagers = async function () {
 };
 
 exports.addManager = async function (managerData) {
-  try {
-    const { email, name } = managerData;
-    const user = await this.findByEmail(email);
+  const { email, name } = managerData;
+  const user = await this.findByEmail(email);
 
-    if (user && user.role !== 'manager') {
-      throw new AppError('Пользователь с такой почтой уже есть', 400);
-    }
+  if (user && user.role !== 'manager') {
+    throw new AppError('Пользователь с такой почтой уже есть', 400);
+  }
 
-    if (user && user.role === 'manager') {
-      user.isActive = true;
-      await user.save();
-      return user;
-    }
+  if (user && user.role === 'manager') {
+    user.isActive = true;
+    await user.save();
+    return user;
+  }
 
-    if (!user) {
-      const userData = { email, name, role: 'manager' };
-      const manager = await UsersModel.create(userData);
-      return manager;
-    }
-  } catch (err) {
-    console.log('err', err);
-    throw new AppError('Не удалось создать пользователя', 500);
+  if (!user) {
+    const userData = { email, name, role: 'manager' };
+    const manager = await UsersModel.create(userData);
+    return manager;
   }
 };
 
@@ -152,7 +147,7 @@ exports.removeManagerByEmail = async function (email) {
     if (!manager) {
       throw new AppError(`Не удалось найти менеджера с почтой ${email}`, 404);
     }
-    const deals = await DealsService.findDealsByManager(manager._id);
+    const deals = await DealsService.findByManagerId(manager._id);
     if (deals && deals.length > 0) {
       manager.isActive = false;
       await manager.save();

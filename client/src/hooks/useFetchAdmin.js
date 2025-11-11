@@ -54,10 +54,12 @@ export default function useFetchAdmin() {
       if (response.data.success) {
         setManagers(response.data.managers);
       } else {
-        setErrorMessage('Менеджер не добавлен');
+        const errMessage = response.data.error.message;
+        setErrorMessage(`Менеджер не добавлен, ${errMessage}`);
       }
     } catch (err) {
-      setErrorMessage('Менеджер не добавлен');
+      const errMessage = err.response.data.error.message;
+      setErrorMessage(`Менеджер не добавлен, ${errMessage}`);
       console.error('Менеджер не добавлен', err);
     }
     setNewManagerName('');
