@@ -15,6 +15,9 @@ export default function ClientAdminPage() {
     userInputCoins,
     setUserInputCoins,
     currentExchangeRate,
+    hdlDeleteAccount,
+    showToConfirmDeleting,
+    hdlDeleteAccountConfirmed,
   } = useFetchClientAdmin();
 
   const calc_saving = (coins, rate) => {
@@ -24,6 +27,8 @@ export default function ClientAdminPage() {
   const cost1000 = (1000 * currentExchangeRate) / 100;
   const savingsTodayStr = calc_saving(1000, currentExchangeRate);
   const MAX_TO_BUY_WST_ONCE = 1000;
+  const allowed_to_delete =
+    coinsData && parseInt(coinsData.totalCoins, 10) === 0;
 
   return (
     <>
@@ -70,6 +75,30 @@ export default function ClientAdminPage() {
                   <div className="is-size-7 mb-3">
                     Дата рег.: <span>{formatDate(user.createdAt)}</span>
                   </div>
+                  {allowed_to_delete && (
+                    <div className="is-size-7 mb-3">
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          hdlDeleteAccount(e);
+                        }}
+                      >
+                        Удалить аккаунт
+                      </a>
+                    </div>
+                  )}
+                  {allowed_to_delete && showToConfirmDeleting && (
+                    <div className="is-size-7 mb-3">
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          hdlDeleteAccountConfirmed(e);
+                        }}
+                      >
+                        Подтвердить удаление
+                      </a>
+                    </div>
+                  )}
                 </div>
                 <div className="column is-7">
                   <div className="is-size-4 mb-5">

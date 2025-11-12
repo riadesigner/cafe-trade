@@ -103,7 +103,18 @@ router.put(
 );
 
 router.delete(
+  '/users/clients/me',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const myId = req.user.id;
+    await UsersService.removeClientById(myId);
+    sendSuccess(res, {});
+  }),
+);
+
+router.delete(
   '/users/manager',
+  passport.authenticate('jwt', { session: false }),
   asyncHandler(async (req, res) => {
     const { email } = req.body;
     await UsersService.removeManagerByEmail(email);

@@ -9,11 +9,8 @@ exports.findByUserId = async function (userId) {
       .populate('manager')
       .sort({ createdAt: -1 });
     return deals;
-  } catch (e) {
-    console.log(
-      `cant find deals by the userId ${userId}, err: ${e.message || e}`,
-    );
-    throw new AppError('User not found', 404);
+  } catch {
+    return [];
   }
 };
 

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
 import api from '../utils/api.jsx';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function useFetchClientAdmin() {
   const [user, setUser] = useState(null);
@@ -10,14 +10,41 @@ export default function useFetchClientAdmin() {
   const [nowLoading, setNowLoading] = useState(true);
   const [nowLoadingDeals, setNowLoadingDeals] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showToConfirmDeleting, setShowToConfirmDeleting] = useState(false);
   const [coinsData, setCoinsData] = useState({
     totalCoins: 0,
     totalPurchases: 0,
     totalSpendings: 0,
   });
   const [currentExchangeRate, setCurrentExchangeRate] = useState(0);
+  const { logout } = useAuth();
 
   const navigate = useNavigate();
+
+  const hdlDeleteAccount = (e) => {
+    e.preventDefault();
+    setShowToConfirmDeleting(true);
+  };
+
+  const dologout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const hdlDeleteAccountConfirmed = async () => {
+    try {
+      const response = await api.delete('/users/clients/me');
+      if (response.data.success) {
+        // выйти из аккаунта и перейти на главную
+        dologout();
+      } else {
+        setErrorMessage('[2] невозможно удалить пользователя');
+      }
+    } catch (err) {
+      setErrorMessage('[1] невозможно удалить пользователя');
+      console.error('невозможно удалить пользователя', err);
+    }
+  };
 
   const fetchDeals = async () => {
     try {
@@ -99,5 +126,8 @@ export default function useFetchClientAdmin() {
     userInputCoins,
     setUserInputCoins,
     currentExchangeRate,
+    hdlDeleteAccount,
+    showToConfirmDeleting,
+    hdlDeleteAccountConfirmed,
   };
 }

@@ -166,3 +166,25 @@ exports.removeManagerByEmail = async function (email) {
     throw new AppError(`Не удется удалить менеджера ${email}`, 400);
   }
 };
+
+exports.removeClientById = async function (clientId) {
+  try {
+    const deals = await DealsService.findByUserId(clientId);
+    if (deals && deals.length > 0) {
+      throw new AppError(
+        '[1] У пользователя есть покупки, удаление невозможно.',
+        400,
+      );
+    }
+
+    const result = await UsersModel.findByIdAndDelete(clientId);
+    if (!result) {
+      throw new AppError(`[2] Не удется удалить клиента ${clientId}`, 400);
+    }
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    throw AppError(`[3] Не удалось удалить клиента ${clientId}`, 500);
+  }
+};
