@@ -23,6 +23,7 @@ export default function ManagerNewDealPage() {
     currentClientId,
     nowSearching,
     nowLoading,
+    nowSelling,
     startSearching,
     errorMessage,
   } = useFetchManagerNewDeal();
@@ -102,6 +103,11 @@ export default function ManagerNewDealPage() {
                     >
                       Продать товар
                     </button>
+                    {nowSelling && (
+                      <div className="mt-2-mobile mb-2-mobile">
+                        процессинг..
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -18,12 +18,12 @@ const dealSchema = new Schema(
       type: Date,
     },
     user: {
-      type: Schema.Types.Mixed,
+      type: Schema.Types.ObjectId,
       ref: 'Users',
       default: null,
     },
     manager: {
-      type: Schema.Types.Mixed,
+      type: Schema.Types.ObjectId,
       ref: 'Users',
       default: null,
     },

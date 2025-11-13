@@ -6,6 +6,7 @@ export default function useFetchAdmin() {
   const [user, setUser] = useState(null);
   const [nowSearching, setNowSearching] = useState(false);
   const [nowLoading, setNowLoading] = useState(false);
+  const [nowSelling, setNowSelling] = useState(false);
   const [clientPhone, setClientPhone] = useState('');
   const [foundClients, setFoundClients] = useState([]);
   const [currentClientId, setCurrentClientId] = useState(null);
@@ -24,7 +25,7 @@ export default function useFetchAdmin() {
 
   const hdlSetCurrentClient = async (e, clientId) => {
     e.preventDefault();
-    // loading full info abou user
+    // loading full info about user
     const clients = foundClients.filter((u) => u.id === clientId);
     setFoundClients(clients);
     setNowLoading(true);
@@ -50,15 +51,27 @@ export default function useFetchAdmin() {
 
   const hdlToSell = async (e) => {
     e.preventDefault();
+    if (nowSelling) return false;
     const mc = parseInt(managerInputCoins, 10);
     const cs = parseInt(currentClientTotalCoins, 10);
     if (mc > cs) {
-      // console.log("не достаточно средств на счету");
       setErrorMessage('не достаточно средств на счету');
     } else {
-      // try{
-      // }catch{
-      // }
+      try {
+        setNowSelling(true);
+        const response = await api.put(`/deals/sell/${mc}`, {
+          clientId: currentClientId,
+        });
+        if (response.data.success) {
+          navigate('/cp/cafe-manager');
+        } else {
+          setErrorMessage('продажа не состоялась');
+        }
+        setNowSelling(false);
+      } catch (err) {
+        setNowSelling(false);
+        setErrorMessage(`${err.response.data.message}`);
+      }
     }
   };
 
@@ -129,6 +142,7 @@ export default function useFetchAdmin() {
     currentClientId,
     nowSearching,
     nowLoading,
+    nowSelling,
     startSearching,
     errorMessage,
   };

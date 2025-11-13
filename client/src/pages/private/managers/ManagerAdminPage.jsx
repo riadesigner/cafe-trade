@@ -1,6 +1,7 @@
 import useFetchManager from '../../../hooks/useFetchManager.js';
 import { Link } from 'react-router-dom';
 import ErrorMessage from '../../../components/ErrorMessage.jsx';
+import ManagersDeal from '../../../components/ManagersDeal.jsx';
 
 export default function ManagerAdminPage() {
   const { user, deals, nowLoading, errorMessage } = useFetchManager();
@@ -17,7 +18,7 @@ export default function ManagerAdminPage() {
                   <small>{user && user.email}</small>
                 </p>
                 <div>
-                  Всего продаж: <span className="bright">0</span>
+                  Всего продаж: <span className="bright">{deals.length}</span>
                 </div>
                 <br />
               </div>
@@ -36,7 +37,7 @@ export default function ManagerAdminPage() {
                 <p>...loading</p>
               ) : deals && deals.length > 0 ? (
                 deals.map((d) => {
-                  return <div key={d.id}>Deal!</div>;
+                  return <ManagersDeal key={d.id} data={d} />;
                 })
               ) : (
                 <p className="mt-0">

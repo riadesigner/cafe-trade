@@ -4,7 +4,7 @@ const updateExchangeRate = require('../exchange-rates/updateExchangeRate');
 
 function initCronJobs() {
   // Каждый день в 9:00 = 0 9 * * *
-  cron.schedule('*/5 * * * *', async () => {
+  cron.schedule('*/60 * * * *', async () => {
     console.log('Running exchange rate update...');
     try {
       console.log('try exchange');

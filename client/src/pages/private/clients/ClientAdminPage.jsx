@@ -68,7 +68,7 @@ export default function ClientAdminPage() {
                   </div>
                   <div className="is-size-7 mb-3">
                     Всего потрачено:{' '}
-                    <span className="bright">
+                    <span className="is-danger">
                       {coinsData ? coinsData.totalSpendings : 0} WSM
                     </span>
                   </div>

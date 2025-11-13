@@ -1,23 +1,11 @@
 const express = require('express');
 const UsersService = require('../users/users.service');
 const DealsService = require('./deals.service');
+const ExchangeRatesService = require('../exchange-rates/exchange-rates.service');
 const passport = require('passport');
 const { asyncHandler, sendSuccess, sendError } = require('../middleware/utils');
 
 const router = express.Router();
-
-router.get(
-  '/deals/me',
-  passport.authenticate('jwt', { session: false }),
-  asyncHandler(async (req, res) => {
-    const user = await UsersService.findByEmail(req.user.email);
-    if (!user) {
-      return sendError(res, 'User not found', 404);
-    }
-    const deals = await DealsService.findByUserId(user._id);
-    sendSuccess(res, { deals: deals.map((d) => d.toJSON()) });
-  }),
-);
 
 router.get(
   '/deals/bymanager/:managerId',
@@ -36,6 +24,19 @@ router.get(
   }),
 );
 
+router.get(
+  '/deals/me',
+  passport.authenticate('jwt', { session: false }),
+  asyncHandler(async (req, res) => {
+    const user = await UsersService.findByEmail(req.user.email);
+    if (!user) {
+      return sendError(res, 'User not found', 404);
+    }
+    const deals = await DealsService.findByUserId(user._id);
+    sendSuccess(res, { deals: deals.map((d) => d.toJSON()) });
+  }),
+);
+
 router.put(
   '/deals/me/:amount',
   passport.authenticate('jwt', { session: false }),
@@ -45,7 +46,8 @@ router.put(
     if (!user) {
       return sendError(res, 'User not found', 404);
     }
-    const rate = Math.floor(Math.random() * (99 - 70 + 1) + 70);
+    // const rate = Math.floor(Math.random() * (99 - 70 + 1) + 70);
+    const rate = await ExchangeRatesService.findLast();
     const dealDataDto = {
       type: 'purchase',
       user: user._id,
@@ -59,28 +61,22 @@ router.put(
   }),
 );
 
-router.post(
+router.put(
   '/deals/sell/:amount',
   passport.authenticate('jwt', { session: false }),
   asyncHandler(async (req, res) => {
     const { amount } = req.params;
-    console.log('amount', amount);
-    // const user = await UsersService.findByEmail(req.user.email);
-    // if (!user) {
-    //   return sendError(res, 'User not found', 404);
-    // }
-    // const rate = Math.floor(Math.random() * (99 - 70 + 1) + 70);
-    // const dealDataDto = {
-    //   type: 'purchase',
-    //   user: user._id,
-    //   coins: amount,
-    //   exchangeRate: rate,
-    // };
-    // await DealsService.create(dealDataDto);
-    // const deals = await DealsService.findByUserId(user._id);
-    // const updatedCoinsData = await DealsService.calcCoinsByUser(user._id);
-    // sendSuccess(res, { deals: deals.map((d) => d.toJSON()), updatedCoinsData });
-    sendSuccess(res, {});
+    const { clientId } = req.body;
+    const managerId = req.user.id;
+    const ExchangeRate = await ExchangeRatesService.findLast();
+    const rate = ExchangeRate.rate;
+    const newDeal = await DealsService.doSell({
+      clientId,
+      managerId,
+      amount,
+      rate,
+    });
+    sendSuccess(res, { deal: newDeal.toJSON() });
   }),
 );
 

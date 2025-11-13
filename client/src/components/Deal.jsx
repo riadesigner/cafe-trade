@@ -10,7 +10,7 @@ export default function Deal({ data }) {
   return (
     <>
       {data.type == 'purchase' ? (
-        <div className="mb-3">
+        <div className="mb-3 is-size-7">
           {formatDateTime(data.createdAt)} - купил &nbsp;
           <span className="bright">
             <strong>{data.coins} WSM</strong> (курс: {data.exchangeRate / 100})
@@ -18,10 +18,10 @@ export default function Deal({ data }) {
           </span>
         </div>
       ) : (
-        <div className="mb-3">
+        <div className="mb-3 is-size-7">
           12.10.2025 - потратил &nbsp;
           <span className="is-danger">
-            <strong>200 WSM</strong> Менеджер: Евгений / pogreb@inbox.ru
+            <strong>- 200 WSM</strong> Менеджер: Евгений / pogreb@inbox.ru
           </span>
         </div>
       )}

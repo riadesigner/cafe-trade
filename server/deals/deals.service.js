@@ -1,5 +1,5 @@
 const AppError = require('../middleware/AppError');
-
+const UsersService = require('../users/users.service');
 const DealsModel = require('./deals.model');
 
 exports.findByUserId = async function (userId) {
@@ -93,10 +93,30 @@ exports.create = async function (dealDataDto) {
 
 exports.findByManagerId = async function (managerId) {
   try {
-    const deals = await DealsModel.find({ manager: managerId });
-    return deals.populate('user');
+    const opt = { manager: managerId };
+    const sort = { createdAt: -1 };
+
+    const deals = await DealsModel.find(opt).populate('user').sort(sort);
+    return deals;
   } catch (err) {
     console.log(`not found deals for the managerId ${managerId}`, err);
     return [];
   }
+};
+
+exports.doSell = async function (opt) {
+  const { clientId, managerId, amount, rate } = opt;
+  console.log('-------new sell----------', clientId, managerId, amount, rate);
+  const manager = await UsersService.findById(managerId);
+  if (!manager && manager.role !== 'manager') {
+    throw new AppError('Операция запрещена', 403);
+  }
+  const dealDataDto = {
+    type: 'spending',
+    user: clientId,
+    manager: managerId,
+    coins: amount,
+    exchangeRate: rate,
+  };
+  return await this.create(dealDataDto);
 };
