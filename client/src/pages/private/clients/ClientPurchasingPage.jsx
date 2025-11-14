@@ -85,13 +85,7 @@ export default function ClientPurchasingPage() {
             </div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
-            <p className="mb-0">
-              <small>
-                <sup>*</sup>WSM – внутренняя валюта кафе WallStreet во
-                Владивостоке. Предназначена только для покупки продукции в кафе
-                WallStreet во Владивостоке.
-              </small>
-            </p>
+
             <p>
               <small>
                 <sup>**</sup>При расчете WS Монетами в кафе WallStreet во

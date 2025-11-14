@@ -6,16 +6,13 @@ export default function ManagersDeal({ data }) {
   const strPhone = data.user.phone ?? 'не указан';
 
   return (
-    <div className="mb-3">
+    <div className="mb-3 is-size-7">
       {formatDateTime(data.createdAt)} - &nbsp;
       <span className="is-danger">
         <strong>{data.coins} WSM</strong> &nbsp;
-      </span>
-      <small>
-        {' '}
-        <span className="ml-2 mr-2">({strRate})</span> Клиент: {data.user.name}{' '}
-        / {strPhone} / {data.user.email}
-      </small>
+      </span>{' '}
+      <span className="ml-2 mr-2">({strRate})</span> Клиент: {data.user.name} /{' '}
+      {strPhone} / {data.user.email}
     </div>
   );
 }

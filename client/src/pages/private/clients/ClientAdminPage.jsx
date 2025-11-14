@@ -127,7 +127,7 @@ export default function ClientAdminPage() {
                     </p>
                   </div>
                   <br />
-                  <h2>Wall Street Монеты</h2>
+                  <h2 id="buywsm">Wall Street Монеты</h2>
 
                   <div className="level is-1" style={{ maxWidth: '350px' }}>
                     <input

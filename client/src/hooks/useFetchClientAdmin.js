@@ -1,9 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import api from '../utils/api.jsx';
 import { useAuth } from '../contexts/AuthContext.jsx';
 
 export default function useFetchClientAdmin() {
+  const location = useLocation();
+
   const [user, setUser] = useState(null);
   const [deals, setDeals] = useState([]);
   const [userInputCoins, setUserInputCoins] = useState(100);
@@ -93,6 +95,16 @@ export default function useFetchClientAdmin() {
   };
 
   useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.substring(1);
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 500);
+    }
+
     setCurrentExchangeRate(0);
 
     const fetchUser = async () => {
@@ -113,7 +125,7 @@ export default function useFetchClientAdmin() {
     };
 
     fetchUser();
-  }, [navigate]);
+  }, [navigate, location]);
 
   return {
     user,
