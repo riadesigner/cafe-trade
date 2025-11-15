@@ -21,7 +21,8 @@ export default function Deal({ data }) {
         <div className="mb-3 is-size-7">
           12.10.2025 - потратил &nbsp;
           <span className="is-danger">
-            <strong>- 200 WSM</strong> Менеджер: Евгений / pogreb@inbox.ru
+            <strong>- {data.coins} WSM</strong> Менеджер: Евгений /
+            pogreb@inbox.ru
           </span>
         </div>
       )}
