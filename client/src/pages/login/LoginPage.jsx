@@ -62,7 +62,7 @@ export default function LoginPage() {
             <div className="block">
               <p className="has-text-centered is-size-7-mobile">
                 <i className="fa-solid fa-check"></i> &nbsp; Я согласен с{' '}
-                <Link to="/useragree">
+                <Link to="https://wallstreet-cafe.tilda.ws/privacy">
                   политикой обработки персональных данных
                 </Link>
               </p>
