@@ -24,18 +24,18 @@ export default function HomePage() {
   const rate = currentExchangeRate / 100;
 
   const allRates = [
-    { id: '001', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.69' },
-    { id: '002', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.79' },
-    { id: '003', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.89' },
-    { id: '004', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.91' },
-    { id: '005', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.69' },
-    { id: '006', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.79' },
-    { id: '007', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.89' },
-    { id: '008', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.91' },
-    { id: '009', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.69' },
-    { id: '010', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.79' },
-    { id: '011', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.89' },
-    { id: '012', createdAt: '2024-01-15T10:30:45.123Z', exhangeRate: '0.91' },
+    { id: '001', createdAt: '2025-12-06T10:30:45.123Z', exhangeRate: '0.69' },
+    { id: '002', createdAt: '2025-12-06T10:30:45.123Z', exhangeRate: '0.79' },
+    { id: '003', createdAt: '2025-12-06T10:30:45.123Z', exhangeRate: '0.89' },
+    { id: '004', createdAt: '2025-12-06T10:30:45.123Z', exhangeRate: '0.91' },
+    { id: '005', createdAt: '2025-12-06T10:30:45.123Z', exhangeRate: '0.69' },
+    { id: '006', createdAt: '2025-12-06T10:30:45.123Z', exhangeRate: '0.79' },
+    { id: '007', createdAt: '2025-12-09T10:30:45.123Z', exhangeRate: '0.89' },
+    { id: '008', createdAt: '2025-12-09T10:30:45.123Z', exhangeRate: '0.91' },
+    { id: '009', createdAt: '2025-12-09T10:30:45.123Z', exhangeRate: '0.69' },
+    { id: '010', createdAt: '2025-12-09T10:30:45.123Z', exhangeRate: '0.79' },
+    { id: '011', createdAt: '2025-12-10T10:30:45.123Z', exhangeRate: '0.89' },
+    { id: '012', createdAt: '2025-12-10T10:30:45.123Z', exhangeRate: '0.91' },
   ];
 
   const allRatesWithDelta = allRates.map((rate, index, array) => {
